@@ -40,9 +40,8 @@ class SMTPFactory(NamedFactory[SMTPClient]):
             return messages
 
         try:
-            client = self.create(name)
-            client.connect()
-            client.quit()
+            with self.create(name) as client:
+                client.smtp.noop()
         except Exception as ex:
             messages.append(
                 Error(

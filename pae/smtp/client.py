@@ -3,7 +3,7 @@ import socket
 from email.message import Message
 from email.mime.text import MIMEText
 from smtplib import SMTP
-from typing import Sequence, Optional
+from typing import Sequence, Optional, Union, Dict
 
 __all__ = ("SMTPClient", "NotConnected")
 
@@ -54,14 +54,16 @@ class SMTPClient:
         """
         Connect to SMTP server
         """
-        if self.smtp is not None:
-            return
-
-        self.smtp = SMTP(
-            self.host, self.port, self.local_hostname, self.timeout, self.source_address
-        )
-        if self.username:
-            self.smtp.login(self.username, self.password)
+        if self.smtp is None:
+            self.smtp = SMTP(
+                self.host,
+                self.port,
+                self.local_hostname,
+                self.timeout,
+                self.source_address,
+            )
+            if self.username:
+                self.smtp.login(self.username, self.password)
 
     def quit(self):
         """
@@ -71,37 +73,40 @@ class SMTPClient:
             self.smtp.quit()
             self.smtp = None
 
-    def send_message(self, msg: Message):
+    def send_message(self, msg: Message) -> Dict[str, Sequence]:
         """
         Send an email message
+
+        :returns: List of failed recipients (unless all failed) and the reason
+
         """
         if self.smtp is None:
             raise NotConnected("`connect` has not been called prior to `send_message`")
 
-        self.smtp.send_message(msg)
+        return self.smtp.send_message(msg)
 
     def send_plain(
         self,
-        to_addrs: Sequence[str],
+        to: Union[str, Sequence[str]],
         subject: str,
         body: str,
         *,
-        cc_addrs: Sequence[str] = None,
-        bcc_addrs: Sequence[str] = None,
-        from_addr: str = None,
-    ):
+        cc: Union[str, Sequence[str]] = None,
+        bcc: Union[str, Sequence[str]] = None,
+        from_: str = None,
+    ) -> Dict[str, Sequence]:
         """
         Send a plain text basic email message.
         """
         msg = MIMEText(body)
         msg["Subject"] = subject
-        msg["From"] = from_addr or self.from_addr
-        msg["To"] = ", ".join(to_addrs)
+        msg["From"] = from_ or self.from_addr
+        msg["To"] = to if isinstance(to, str) else ", ".join(to)
 
-        if cc_addrs:
-            msg["CC"] = ", ".join(cc_addrs)
+        if cc:
+            msg["CC"] = cc if isinstance(cc, str) else ", ".join(cc)
 
-        if bcc_addrs:
-            msg["BCC"] = ", ".join(bcc_addrs)
+        if bcc:
+            msg["BCC"] = bcc if isinstance(bcc, str) else ", ".join(bcc)
 
-        self.send_message(msg)
+        return self.send_message(msg)
