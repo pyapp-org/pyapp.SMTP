@@ -1,4 +1,4 @@
-SMTP = None
+SMTP = {"default": {"host": "localhost"}}
 """
 SMTP server settings
 

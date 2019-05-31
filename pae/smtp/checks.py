@@ -1,4 +1,4 @@
 from pyapp.checks.registry import register
-from .factory import smtp_factory
+from .factory import factory
 
-register(smtp_factory)
+register(factory)

@@ -2,8 +2,8 @@ import socket
 
 from email.message import Message
 from email.mime.text import MIMEText
-from smtplib import SMTP, SMTP_SSL
-from typing import Sequence
+from smtplib import SMTP
+from typing import Sequence, Optional
 
 __all__ = ("SMTPClient", "NotConnected")
 
@@ -27,7 +27,7 @@ class SMTPClient:
         source_address: str = None,
         username: str = None,
         password: str = None,
-        sender_addr: str = None,
+        from_addr: str = None,
     ):
 
         # SMTP client args
@@ -41,7 +41,7 @@ class SMTPClient:
         self.password = password
         self.from_addr = from_addr
 
-        self.smtp: SMTP = None
+        self.smtp: Optional[SMTP] = None
 
     def __enter__(self) -> "SMTPClient":
         self.connect()

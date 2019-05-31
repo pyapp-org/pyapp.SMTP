@@ -1,5 +1,5 @@
 from pyapp.conf.helpers import NamedFactory
-from pyapp.checks.message import CheckMessage
+from pyapp.checks.messages import CheckMessage, Error
 from typing import Union, Iterable, Dict, Any
 
 from .client import SMTPClient
@@ -31,9 +31,9 @@ class SMTPFactory(NamedFactory[SMTPClient]):
         return SMTPClient(**config)
 
     def check_definition(
-        self, config_defitions: Dict[str, Any], name: str, **_
+        self, config_definitions: Dict[str, Any], name: str, **_
     ) -> Union[CheckMessage, Iterable[CheckMessage]]:
-        messages = super().check(config_defitions, name)
+        messages = super().check_definition(config_definitions, name)
 
         # If there are any serious messages don't bother with connectivity check
         if any(m.is_serious() for m in messages):
@@ -56,4 +56,4 @@ class SMTPFactory(NamedFactory[SMTPClient]):
 
 
 factory = SMTPFactory("SMTP")
-create_client = smtp_factory.create
+create_client = factory.create
