@@ -8,6 +8,14 @@ pyApp - SMTP
    :target: http://github.com/ambv/black
    :alt: Once you go Black...
 
+.. image:: https://api.codeclimate.com/v1/badges/e25e476cd1cd598e89f4/maintainability
+   :target: https://codeclimate.com/github/pyapp-org/pyapp.SMTP/maintainability
+   :alt: Maintainability
+
+.. image:: https://api.codeclimate.com/v1/badges/e25e476cd1cd598e89f4/test_coverage
+   :target: https://codeclimate.com/github/pyapp-org/pyapp.SMTP/test_coverage
+   :alt: Test Coverage
+
 This extension provides an `SMTP` client object configured via pyApp settings.
 
 
