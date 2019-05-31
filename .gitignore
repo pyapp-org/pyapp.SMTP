@@ -4,3 +4,4 @@ dist
 .python-version
 .eggs
 .idea
+*.egg-info
