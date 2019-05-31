@@ -5,6 +5,7 @@ pyApp SMTP Extension
 """
 from pyapp.versioning import get_installed_version
 
+from .client import *
 from .factory import *
 
 __name__ = "SMTP Extension"
