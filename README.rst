@@ -31,8 +31,6 @@ Install using *pipenv*::
     pip install pyApp-SMTP
 
 
-Add `pae.smtp` into the `EXT` list in your applications `default_settings.py`.
-
 Add the `SMTP` block into your runtime settings file::
 
     SMTP = {
@@ -53,7 +51,7 @@ Usage
 
 The following example creates an SMTP client instance::
 
-    from pae.smtp import get_client
+    from pyapp_ext.smtp import get_client
 
     smtp = get_client()
 
@@ -61,7 +59,7 @@ The following example creates an SMTP client instance::
 API
 ===
 
-`pae.smtp.get_client() -> SMTP`
+`pyapp_ext.smtp.get_client() -> SMTP`
 
     Get named `SMTP` instance.
 

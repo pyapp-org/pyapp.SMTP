@@ -17,7 +17,7 @@ class Extension:
     checks = ".checks"
 
     @staticmethod
-    def register_command(root: CommandGroup):
+    def register_commands(root: CommandGroup):
         group = root.create_command_group("smtp")
 
         @group.command
