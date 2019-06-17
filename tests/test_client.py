@@ -3,7 +3,7 @@ from typing import Any, Dict
 import mock
 import pytest
 
-from pae.smtp import client
+from pyapp_ext.smtp import client
 
 
 class TestSMTPClient:

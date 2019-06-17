@@ -1,2 +1,2 @@
 # Just import to ensure there are no syntax errors
-import pae.smtp.checks
+import pyapp_ext.smtp.checks
