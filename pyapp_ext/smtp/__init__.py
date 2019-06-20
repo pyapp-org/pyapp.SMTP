@@ -32,3 +32,8 @@ class Extension:
             """
             smtp_client = create_client(opts.config)
             smtp_client.send_plain(opts.TO, opts.SUBJECT, opts.body or "Test Email", from_=opts.from_)
+
+    @staticmethod
+    def ready():
+        from pyapp.injection import register_factory
+        register_factory(SMTPClient, factory)
