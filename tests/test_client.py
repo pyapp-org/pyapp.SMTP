@@ -57,14 +57,23 @@ class TestSMTPClient:
         with pytest.raises(client.NotConnected):
             target.send_message(msg)
 
-    @pytest.mark.parametrize("msg_args, expected_args", (
+    @pytest.mark.parametrize(
+        "msg_args, expected_args",
+        (
             ({}, {}),
             ({"to": "foo@localhost"}, {"To": "foo@localhost"}),
             ({"cc": "1@localhost"}, {"CC": "1@localhost"}),
-            ({"cc": ["1@localhost", "2@localhost"]}, {"CC": "1@localhost, 2@localhost"}),
+            (
+                {"cc": ["1@localhost", "2@localhost"]},
+                {"CC": "1@localhost, 2@localhost"},
+            ),
             ({"bcc": "1@localhost"}, {"BCC": "1@localhost"}),
-            ({"bcc": ["1@localhost", "2@localhost"]}, {"BCC": "1@localhost, 2@localhost"}),
-    ))
+            (
+                {"bcc": ["1@localhost", "2@localhost"]},
+                {"BCC": "1@localhost, 2@localhost"},
+            ),
+        ),
+    )
     def test_send_plain(
         self,
         mock_smtp: mock.Mock,
